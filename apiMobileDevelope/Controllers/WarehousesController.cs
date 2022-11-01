@@ -11,6 +11,8 @@ namespace apiMobileDevelope.Controllers
 {
     public class WarehousesController : ApiController
     {
+        // https://ssfb.ngknn.local/NGKNN/%D1%81%D0%B5%D1%80%D0%B3%D0%B5%D0%B8%D1%87%D0%B5%D0%B2%D0%B0%D0%B4/Help
+
         private Warehouse_SergeichevEntities db = new Warehouse_SergeichevEntities();
 
         // GET: api/Warehouses
@@ -31,6 +33,21 @@ namespace apiMobileDevelope.Controllers
             }
 
             return Ok(warehouse);
+        }
+
+        [ResponseType(typeof(WarehouseProduct))]
+        public IHttpActionResult GetWarehouse(bool a)
+        {
+            if (a)
+                return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).OrderBy(x => x.productCount));
+            else
+                return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).OrderByDescending(x => x.productCount));
+        }
+
+        [ResponseType(typeof(WarehouseProduct))]
+        public IHttpActionResult SortWarehouse()
+        {
+            return Ok(db.Warehouse.OrderBy(x => x.Count_Product).ToList().ConvertAll(x => new WarehouseProduct(x)));
         }
 
         // PUT: api/Warehouses/5

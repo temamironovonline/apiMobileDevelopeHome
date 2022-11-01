@@ -20,8 +20,17 @@ namespace apiMobileDevelope
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "Sort",
+                routeTemplate: "api/{controller}/sort/",
+                defaults: new { id = RouteParameter.Optional }
+                );
+
             config.Formatters.Clear();
             config.Formatters.Add(new JsonMediaTypeFormatter());
+        
         }
+
     }
 }
