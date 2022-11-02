@@ -3,6 +3,8 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using apiMobileDevelope.Models;
@@ -36,7 +38,15 @@ namespace apiMobileDevelope.Controllers
         }
 
         [ResponseType(typeof(WarehouseProduct))]
-        public IHttpActionResult GetWarehouse(bool a)
+        public IHttpActionResult GetWarehouse(string nameProduct)
+        {
+            Regex checkName = new Regex($@"^{Regex.Escape(nameProduct)}.*");
+            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)));
+        }
+
+        [Route("api/Warehouses/sortByCount")]
+        [HttpGet] // There are HttpGet, HttpPost, HttpPut, HttpDelete.
+        public async Task<IHttpActionResult> SortByCount(bool a)
         {
             if (a)
                 return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).OrderBy(x => x.productCount));
@@ -44,10 +54,14 @@ namespace apiMobileDevelope.Controllers
                 return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).OrderByDescending(x => x.productCount));
         }
 
-        [ResponseType(typeof(WarehouseProduct))]
-        public IHttpActionResult SortWarehouse()
+        [Route("api/Warehouses/sortByPrice")]
+        [HttpGet] // There are HttpGet, HttpPost, HttpPut, HttpDelete.
+        public async Task<IHttpActionResult> SortByPrice(bool a)
         {
-            return Ok(db.Warehouse.OrderBy(x => x.Count_Product).ToList().ConvertAll(x => new WarehouseProduct(x)));
+            if (a)
+                return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).OrderBy(x => x.productPrice));
+            else
+                return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).OrderByDescending(x => x.productCount));
         }
 
         // PUT: api/Warehouses/5

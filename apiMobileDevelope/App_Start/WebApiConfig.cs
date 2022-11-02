@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.Routing;
 
 namespace apiMobileDevelope
 {
@@ -20,13 +21,6 @@ namespace apiMobileDevelope
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
-            config.Routes.MapHttpRoute(
-                name: "Sort",
-                routeTemplate: "api/{controller}/sort/",
-                defaults: new { id = RouteParameter.Optional }
-                );
-
             config.Formatters.Clear();
             config.Formatters.Add(new JsonMediaTypeFormatter());
         

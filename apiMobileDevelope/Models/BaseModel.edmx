@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище Warehouse_SergeichevModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище Warehouse_SergeichevModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Warehouse">
           <Key>
             <PropertyRef Name="Code_Product" />
@@ -13,27 +13,30 @@
           <Property Name="Name_Product" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Type_Product" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Count_Product" Type="int" Nullable="false" />
+          <Property Name="Price_Product" Type="int" Nullable="false" />
+          <Property Name="Photo_Product" Type="varbinary(max)" />
         </EntityType>
         <EntityContainer Name="Хранилище Warehouse_SergeichevModelContainer">
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Warehouse_SergeichevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Warehouse_SergeichevEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Warehouse" EntityType="Warehouse_SergeichevModel.Warehouse" />
+        </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
             <PropertyRef Name="Code_Product" />
           </Key>
           <Property Name="Code_Product" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name_Product" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Type_Product" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name_Product" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type_Product" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Count_Product" Type="Int32" Nullable="false" />
+          <Property Name="Price_Product" Type="Int32" Nullable="false" />
+          <Property Name="Photo_Product" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityContainer Name="Warehouse_SergeichevEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" />
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -43,10 +46,12 @@
           <EntitySetMapping Name="Warehouse">
             <EntityTypeMapping TypeName="Warehouse_SergeichevModel.Warehouse">
               <MappingFragment StoreEntitySet="Warehouse">
-                <ScalarProperty Name="Code_Product" ColumnName="Code_Product" />
-                <ScalarProperty Name="Name_Product" ColumnName="Name_Product" />
-                <ScalarProperty Name="Type_Product" ColumnName="Type_Product" />
+                <ScalarProperty Name="Photo_Product" ColumnName="Photo_Product" />
+                <ScalarProperty Name="Price_Product" ColumnName="Price_Product" />
                 <ScalarProperty Name="Count_Product" ColumnName="Count_Product" />
+                <ScalarProperty Name="Type_Product" ColumnName="Type_Product" />
+                <ScalarProperty Name="Name_Product" ColumnName="Name_Product" />
+                <ScalarProperty Name="Code_Product" ColumnName="Code_Product" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
