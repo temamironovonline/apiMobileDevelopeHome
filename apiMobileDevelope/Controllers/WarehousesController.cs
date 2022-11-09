@@ -14,7 +14,6 @@ namespace apiMobileDevelope.Controllers
 {
     public class WarehousesController : ApiController
     {
-        // https://ssfb.ngknn.local/NGKNN/%D1%81%D0%B5%D1%80%D0%B3%D0%B5%D0%B8%D1%87%D0%B5%D0%B2%D0%B0%D0%B4/Help
 
         private Warehouse_SergeichevEntities db = new Warehouse_SergeichevEntities();
 
@@ -38,33 +37,33 @@ namespace apiMobileDevelope.Controllers
             return Ok(warehouse);
         }
 
-        [ResponseType(typeof(WarehouseProduct))]
-        public IHttpActionResult GetWarehouse(string nameProduct)
-        {
-            Regex checkName = new Regex($@"^{Regex.Escape(nameProduct)}.*");
-            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)));
-        }
+        //[ResponseType(typeof(WarehouseProduct))]
+        //public IHttpActionResult GetWarehouse(string nameProduct)
+        //{
+        //    Regex checkName = new Regex($@"^{Regex.Escape(nameProduct)}.*");
+        //    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)));
+        //}
 
-        [Route("api/Warehouses/sortByCountOrPrice")]
-        [HttpGet] // There are HttpGet, HttpPost, HttpPut, HttpDelete.
-        public async Task<IHttpActionResult> SortByCountOrPrice(int typeOfSort, string nameProduct)
-        {
-            Regex checkName = new Regex($@"{nameProduct}.*");
-            switch(typeOfSort)
-            {
-                case 0: 
-                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)));
-                case 1:
-                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderBy(x => x.productPrice));
-                case 2:
-                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderByDescending(x => x.productPrice));
-                case 3:
-                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderBy(x => x.productCount));
-                case 4:
-                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderByDescending(x => x.productCount));
-                default: return BadRequest();
-            }
-        }
+        //[Route("api/Warehouses/sortByCountOrPrice")]
+        //[HttpGet] // There are HttpGet, HttpPost, HttpPut, HttpDelete.
+        //public async Task<IHttpActionResult> SortByCountOrPrice(int typeOfSort, string nameProduct)
+        //{
+        //    Regex checkName = new Regex($@"{nameProduct}.*");
+        //    switch(typeOfSort)
+        //    {
+        //        case 0: 
+        //            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)));
+        //        case 1:
+        //            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderBy(x => x.productPrice));
+        //        case 2:
+        //            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderByDescending(x => x.productPrice));
+        //        case 3:
+        //            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderBy(x => x.productCount));
+        //        case 4:
+        //            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderByDescending(x => x.productCount));
+        //        default: return BadRequest();
+        //    }
+        //}
 
         // PUT: api/Warehouses/5
         [ResponseType(typeof(void))]
@@ -72,7 +71,7 @@ namespace apiMobileDevelope.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(ModelState); 
             }
 
             if (id != warehouse.Code_Product)
