@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -44,24 +45,25 @@ namespace apiMobileDevelope.Controllers
             return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)));
         }
 
-        [Route("api/Warehouses/sortByCount")]
+        [Route("api/Warehouses/sortByCountOrPrice")]
         [HttpGet] // There are HttpGet, HttpPost, HttpPut, HttpDelete.
-        public async Task<IHttpActionResult> SortByCount(bool a)
+        public async Task<IHttpActionResult> SortByCountOrPrice(int typeOfSort, string nameProduct)
         {
-            if (a)
-                return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).OrderBy(x => x.productCount));
-            else
-                return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).OrderByDescending(x => x.productCount));
-        }
-
-        [Route("api/Warehouses/sortByPrice")]
-        [HttpGet] // There are HttpGet, HttpPost, HttpPut, HttpDelete.
-        public async Task<IHttpActionResult> SortByPrice(bool a)
-        {
-            if (a)
-                return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).OrderBy(x => x.productPrice));
-            else
-                return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).OrderByDescending(x => x.productCount));
+            Regex checkName = new Regex($@"{nameProduct}.*");
+            switch(typeOfSort)
+            {
+                case 0: 
+                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)));
+                case 1:
+                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderBy(x => x.productPrice));
+                case 2:
+                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderByDescending(x => x.productPrice));
+                case 3:
+                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderBy(x => x.productCount));
+                case 4:
+                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderByDescending(x => x.productCount));
+                default: return BadRequest();
+            }
         }
 
         // PUT: api/Warehouses/5

@@ -19,6 +19,6 @@ namespace apiMobileDevelope.Models
         public string Type_Product { get; set; }
         public int Count_Product { get; set; }
         public int Price_Product { get; set; }
-       // public byte[] Photo_Product { get; set; }
+        public byte[] Photo_Product { get; set; }
     }
 }

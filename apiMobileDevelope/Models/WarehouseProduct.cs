@@ -15,7 +15,7 @@ namespace apiMobileDevelope.Models
             productType = warehouse.Type_Product;
             productCount = warehouse.Count_Product;
             productPrice = warehouse.Price_Product;
-            //productPhoto = warehouse.Photo_Product;
+            productPhoto = warehouse.Photo_Product;
         }
 
         public int productId { get; set; }
@@ -23,6 +23,6 @@ namespace apiMobileDevelope.Models
         public string productType { get; set; }
         public int productCount { get; set; }
         public int productPrice { get; set; }
-        //public byte[] productPhoto { get; set; }
+        public byte[] productPhoto { get; set; }
     }
 }
