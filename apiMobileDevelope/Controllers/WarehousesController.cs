@@ -37,33 +37,27 @@ namespace apiMobileDevelope.Controllers
             return Ok(warehouse);
         }
 
-        //[ResponseType(typeof(WarehouseProduct))]
-        //public IHttpActionResult GetWarehouse(string nameProduct)
-        //{
-        //    Regex checkName = new Regex($@"^{Regex.Escape(nameProduct)}.*");
-        //    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)));
-        //}
 
-        //[Route("api/Warehouses/sortByCountOrPrice")]
-        //[HttpGet] // There are HttpGet, HttpPost, HttpPut, HttpDelete.
-        //public async Task<IHttpActionResult> SortByCountOrPrice(int typeOfSort, string nameProduct)
-        //{
-        //    Regex checkName = new Regex($@"{nameProduct}.*");
-        //    switch(typeOfSort)
-        //    {
-        //        case 0: 
-        //            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)));
-        //        case 1:
-        //            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderBy(x => x.productPrice));
-        //        case 2:
-        //            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderByDescending(x => x.productPrice));
-        //        case 3:
-        //            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderBy(x => x.productCount));
-        //        case 4:
-        //            return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderByDescending(x => x.productCount));
-        //        default: return BadRequest();
-        //    }
-        //}
+        [Route("api/Warehouses/sortByCountOrPrice")]
+        [HttpGet] // There are HttpGet, HttpPost, HttpPut, HttpDelete.
+        public async Task<IHttpActionResult> SortByCountOrPrice(int typeOfSort, string nameProduct)
+        {
+            Regex checkName = new Regex($@"{nameProduct}.*");
+            switch (typeOfSort)
+            {
+                case 0:
+                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)));
+                case 1:
+                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderBy(x => x.productPrice));
+                case 2:
+                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderByDescending(x => x.productPrice));
+                case 3:
+                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderBy(x => x.productCount));
+                case 4:
+                    return Ok(db.Warehouse.ToList().ConvertAll(x => new WarehouseProduct(x)).Where(x => checkName.IsMatch(x.productName)).OrderByDescending(x => x.productCount));
+                default: return BadRequest();
+            }
+        }
 
         // PUT: api/Warehouses/5
         [ResponseType(typeof(void))]
